@@ -269,4 +269,8 @@ body {
     .meaning {
         font-size: 13px;
     }
+
+    .save-btn {
+        margin-bottom: 8px;
+    }
 }
