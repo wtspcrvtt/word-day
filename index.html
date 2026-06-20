@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordsDay</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h1 class="app-title">Слово дня</h1>
+        <p class="counter-day" id="dayCounter">День 1 из 30</p>
+        <section class="word-card">
+            <div class="word-header">
+                <span class="word" id="wordDisplay">Эфемерный</span>
+                <button class="info-btn" id="infoBtn">?</button>
+            </div>
+            <p class="part-of-speech" id="partDisplay">Прилагательное</p>
+            <p class="meaning" id="meaningDisplay" >Кратковременный, недолговечный</p>
+        </section>
+        <textarea class="sentence-input" id="sentenceInput" rows="3" placeholder="Ваше предложение с этим словом"></textarea>
+        <button class="submit-btn" id="submitBtn" disabled>Проверить</button>
+
+        <div id="resultArea">
+
+        </div>
+
+        <div class="nav">
+            <button class="nav-btn" id="historyBtn">История</button>
+            <button class="nav-btn" id="statsBtn">Статистика</button>
+            <button class="nav-btn" id="settingsBtn">Настройки</button>
+        </div>
+    </main>
+    <script type="module" src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0D0D0D;
+    color: #E0E0E0;
+    font-family: "Inter", sans-serif;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.app {
+    max-width: 560px;
+    width: 100%;
+}
+
+.app-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: #d4d4d4;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.counter-day {
+    color: #888;
+    font-size: 18px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.word-card {
+    background: #1A1A1A;
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+.word-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.word {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 600;
+    
+}
+
+.info-btn {
+    background: #2A2A2A;
+    border: none;
+    color: #888;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+    flex-shrink: 0;
+    margin-left: 12px;
+}
+
+.info-btn:hover {
+    background: #3A3A3A;
+    color: #fff;
+}
+
+.info-btn.active {
+    background: #6C63FF;
+    color: #fff;
+}
+
+.part-of-speech {
+    color: #6C63FF;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.meaning {
+    color: #AAAAAA;
+    font-size: 14px;
+    background: #222;
+    padding: 0 12px;
+    border-radius: 12px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease, opacity 0.1s ease, margin 0.3s ease;
+}
+
+.meaning.visible {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: 12px;
+    padding: 12px;
+}
+
+.sentence-input {
+    width: 100%;
+    background: #1A1A1A;
+    border: 1px solid #2A2A2A;
+    border-radius: 16px;
+    padding: 16px;
+    color: #E0E0E0;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    resize: vertical;
+    margin-bottom: 12px;
+}
+
+.sentence-input:focus {
+    outline: none;
+    border-color: #6C63FF;
+}
+
+.sentence-input::placeholder {
+    color: #555;
+}
+
+.submit-btn {
+    width: 100%;
+    background: #6C63FF;
+    border: none;
+    padding: 14px;
+    border-radius: 16px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.submit-btn:disabled {
+    background: #2A2A2A;
+    color: #555;
+    cursor: not-allowed;
+}
+
+.submit-btn:not(:disabled):hover {
+    background: #5A52D0;
+}
+
+.nav {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 32px;
+}
+
+.nav-btn {
+    background: none;
+    border: 1px solid #2a2a2a;
+    color: #888;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.nav-btn:hover {
+    border-color: #6c63ff;
+    color: #FFF;
+}
+
+.result-card {
+  background: #1A1A1A;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.score {
+  font-size: 48px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.feedback {
+  color: #E0E0E0;
+  margin: 12px 0;
+  font-size: 16px;
+  text-align: center;
+}
+
+.example {
+  color: #AAAAAA;
+  font-size: 14px;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.save-btn, .retry-btn {
+  background: #6C63FF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: 0.2s;
+}
+
+.save-btn:hover, .retry-btn:hover {
+  background: #5A52D0;
+}
+
+.retry-btn {
+  background: #2A2A2A;
+  color: #888;
+}
+
+.retry-btn:hover {
+  background: #3A3A3A;
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 16px;
+    }
+
+    .app-title {
+        font-size: 28px;
+    }
+
+    .word {
+        font-size: 28px;
+    }
+
+    .counter-day {
+        font-size: 16px;
+    }
+
+    .word-card {
+        padding: 16px;
+    }
+
+    .sentence-input {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .nav-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .meaning {
+        font-size: 13px;
+    }
+}
