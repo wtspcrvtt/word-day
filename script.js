@@ -18,6 +18,19 @@ infoBtn.addEventListener('click', () => {
     infoBtn.classList.toggle('active');
 });
 
+function getCurrentWordIndex() {
+  let index = localStorage.getItem('wordIndex');
+  if (index === null) {
+    index = 0;
+    localStorage.setItem('wordIndex', index);
+  }
+  return parseInt(index);
+}
+
+function setWordIndex(index) {
+  localStorage.setItem('wordIndex', index);
+}
+
 function getDayOfYear() {
     const now = new Date();
     const start = new Date(now.getFullYear(), 0, 0);
@@ -26,17 +39,16 @@ function getDayOfYear() {
     return Math.floor(diff / oneDay);
 }
 
-function getWordOfDay() {
-    const day = getDayOfYear();
-    const index = day % words.length;
-    return words[index];
+function getCurrentWord() {
+  const index = getCurrentWordIndex();
+  return words[index % words.length];
 }
 
 
 
 
 function renderWord() {
-    const currentWord = getWordOfDay();
+    const currentWord = getCurrentWord();
     wordDisplay.textContent = currentWord.word;
     partDisplay.textContent = currentWord.part;
     meaningDisplay.textContent = currentWord.meaning;
@@ -115,13 +127,20 @@ function showResult(data) {
       <div class="score" style="color: ${color};">${score}/10</div>
       <p class="feedback">${feedback}</p>
       <p class="example"><strong>Пример:</strong> ${example}</p>
-      <button class="save-btn" id="saveResultBtn">Сохранить</button>
+      <button class="save-btn" id="saveResultBtn">Сохранить и продолжить</button>
       <button class="retry-btn" id="retryBtn">Попробовать снова</button>
     </div>
   `;
 
   document.getElementById('saveResultBtn').addEventListener('click', () => {
     saveRecord(data);
+    const currentIndex = getCurrentWordIndex();
+    const nextIndex = currentIndex + 1;
+    setWordIndex(nextIndex);
+    renderWord();
+    sentenceInput.value = '';
+    submitBtn.disabled = true;
+    document.getElementById('resultArea').innerHTML = '';
   });
 
   document.getElementById('retryBtn').addEventListener('click', () => {
