@@ -74,7 +74,7 @@ submitBtn.addEventListener('click', async () => {
   submitBtn.textContent = 'Проверяю...';
 
   try {
-    const response = await fetch('http://localhost:3001/api/check-word', {
+    const response = await fetch('https://word-day.onrender.com/api/check-word', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
