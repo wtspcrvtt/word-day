@@ -225,6 +225,125 @@ body {
   color: #fff;
 }
 
+.history-card {
+  background: #1A1A1A;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.history-card:hover {
+  background: #252525;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.history-date {
+  color: #888;
+  font-size: 14px;
+}
+
+.history-word {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.history-score {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.history-details {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #2A2A2A;
+  font-size: 14px;
+  color: #AAAAAA;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  padding: 32px 0;
+}
+
+.danger-btn {
+  background: #2A1A1A;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  color: #FF6B6B;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: 0.2s;
+}
+
+.danger-btn:hover {
+  background: #3A1A1A;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #6C63FF;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.history-title {
+  margin-bottom: 16px;
+}
+
+.stats-summary {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  background: #1A1A1A;
+  padding: 12px 20px;
+  border-radius: 12px;
+  flex: 1;
+  min-width: 100px;
+  text-align: center;
+}
+
+.stat-item span {
+  color: #888;
+  font-size: 14px;
+  display: block;
+}
+
+.stat-item strong {
+  font-size: 24px;
+  color: #E0E0E0;
+}
+
+.stats-chart {
+  background: #1A1A1A;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.stats-note {
+  color: #888;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 8px;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }

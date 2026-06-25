@@ -8,6 +8,7 @@
 </head>
 <body>
     <main>
+        <div id="mainView">
         <h1 class="app-title">Слово дня</h1>
         <p class="counter-day" id="dayCounter">День 1 из 30</p>
         <section class="word-card">
@@ -23,7 +24,20 @@
         <div id="resultArea">
 
         </div>
+        </div>
 
+        <div id="historyView" style="display: none;">
+            <h2 class="history-title">История записей</h2>
+            <button id="backToMainBtn" class="back-btn">На главную</button>
+            <div id="historyList"></div>
+            <button id="clearHistoryBtn" class="danger-btn">Очистить историю</button>
+        </div>
+
+        <div id="statsView" style="display: none;">
+            <h2 class="stats-title">Статистика</h2>
+            <button id="backToMainBtn" class="back-btn">На главную</button>
+            <div id="statsList"></div>
+        </div>
         <div class="nav">
             <button class="nav-btn" id="historyBtn">История</button>
             <button class="nav-btn" id="statsBtn">Статистика</button>

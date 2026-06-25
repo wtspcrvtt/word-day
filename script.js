@@ -169,3 +169,122 @@ function saveRecord(data) {
   sentenceInput.value = '';
   submitBtn.disabled = true;
 }
+
+document.getElementById('historyBtn').addEventListener('click', () => {
+  document.getElementById('resultArea').style.display = 'none';
+  document.getElementById('historyView').style.display = 'block';
+  renderHistory();
+});
+
+document.getElementById('backToMainBtn').addEventListener('click', () => {
+  document.getElementById('historyView').style.display = 'none';
+  document.getElementById('resultArea').style.display = 'block';
+});
+
+function renderHistory() {
+  const container = document.getElementById('historyList');
+  const records = JSON.parse(localStorage.getItem('wordDayRecords') || '[]');
+
+  if (records.length === 0) {
+    container.innerHTML = '<p class="empty-message">Пока нет записей( Пора написать первое предложение!</p>';
+    return;
+  }
+
+  container.innerHTML = '';
+records.slice().reverse().forEach((record, index) => {
+    const card = document.createElement('div');
+    card.className = 'history-card';
+    card.innerHTML = `
+      <div class="history-header">
+        <span class="history-date">${record.date}</span>
+        <span class="history-word">${record.word}</span>
+        <span class="history-score" style="color: ${getScoreColor(record.score)}">${record.score}/10</span>
+      </div>
+      <div class="history-details" style="display: none;">
+        <p><strong>Предложение:</strong> ${record.userSentence}</p>
+        <p><strong>Фидбек:</strong> ${record.feedback}</p>
+        <p><strong>Пример:</strong> ${record.example}</p>
+      </div>
+    `;
+    card.addEventListener('click', () => {
+      const details = card.querySelector('.history-details');
+      details.style.display = details.style.display === 'none' ? 'block' : 'none';
+    });
+    container.appendChild(card);
+  });
+}
+
+function getScoreColor(score) {
+  if (score >= 9) return '#6BCB77';
+  if (score >= 7) return '#FFD93D';
+  return '#FF6B6B';
+}
+
+document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+  if (confirm('Удалить все записи навсегда?')) {
+    localStorage.removeItem('wordDayRecords');
+    renderHistory();
+  }
+});
+
+function showView(view) {
+  document.getElementById('mainView').style.display = view === 'main' ? 'block' : 'none';
+  document.getElementById('historyView').style.display = view === 'history' ? 'block' : 'none';
+  document.getElementById('resultArea').style.display = 'block';
+}
+
+document.getElementById('historyBtn').addEventListener('click', () => {
+  showView('history');
+  renderHistory();
+});
+
+document.getElementById('backToMainBtn').addEventListener('click', () => {
+  showView('main');
+});
+
+document.getElementById('statsBtn').addEventListener('click', () => {
+  showView('stats');
+  renderStats();
+});
+
+function renderStats() {
+  const container = document.getElementById('statsList');
+  const records = JSON.parse(localStorage.getItem('wordDayRecords') || '[]');
+
+  if (records.length === 0) {
+    container.innerHTML = '<p class="empty-message">Нет данных для статистики. Напиши первое предложение!</p>';
+    return;
+  }
+
+  const total = records.length;
+  const avgScore = (records.reduce((sum, r) => sum + r.score, 0) / total).toFixed(1);
+  const best = Math.max(...records.map(r => r.score));
+
+  container.innerHTML = `
+    <div class="stats-summary">
+      <div class="stat-item"><span>Всего записей</span> <strong>${total}</strong></div>
+      <div class="stat-item"><span>Средний балл</span> <strong>${avgScore}</strong></div>
+      <div class="stat-item"><span>Лучший результат</span> <strong>${best}/10</strong></div>
+    </div>
+    <div class="stats-chart">
+      <canvas id="scoreChart" width="400" height="200"></canvas>
+    </div>
+    <p class="stats-note">График среднего балла по дням</p>
+  `;
+
+  drawChart(records);
+}
+
+function showView(view) {
+  document.getElementById('mainView').style.display = view === 'main' ? 'block' : 'none';
+  document.getElementById('historyView').style.display = view === 'history' ? 'block' : 'none';
+  document.getElementById('statsView').style.display = view === 'stats' ? 'block' : 'none';
+  document.getElementById('resultArea').style.display = 'block';
+}
+
+function drawChart(records) {
+  const canvas = document.getElementById('scoreChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
