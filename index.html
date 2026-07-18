@@ -8,6 +8,7 @@
 </head>
 <body>
     <main>
+        <button id="themeToggleIcon" class="theme-icon">🌙</button>
         <div id="mainView">
         <h1 class="app-title">Слово дня</h1>
         <p class="counter-day" id="dayCounter">День 1 из 30</p>
@@ -38,6 +39,19 @@
             <button id="backToMainBtn" class="back-btn">На главную</button>
             <div id="statsList"></div>
         </div>
+
+        <div id="settingsView" style="display: none;">
+            <h2 class="settings-title">Настройки</h2>
+            <button id="backToMainBtn" class="back-btn">На главную</button>
+            <div class="settings-group">
+                <label class="settings-label">
+                    <span>Ежедневные напоминания</span>
+                    <input type="checkbox" id="notificationsToggle">
+                </label>
+            </div>
+            <button id="resetProgressBtn" class="danger-btn">Сбросить прогресс</button>
+        </div>
+
         <div class="nav">
             <button class="nav-btn" id="historyBtn">История</button>
             <button class="nav-btn" id="statsBtn">Статистика</button>

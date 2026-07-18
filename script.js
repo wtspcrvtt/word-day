@@ -246,6 +246,10 @@ document.getElementById('statsBtn').addEventListener('click', () => {
   renderStats();
 });
 
+document.getElementById('settingsBtn').addEventListener('click', () => {
+  showView('settings');
+});
+
 function renderStats() {
   const container = document.getElementById('statsList');
   const records = JSON.parse(localStorage.getItem('wordDayRecords') || '[]');
@@ -288,6 +292,7 @@ function showView(view) {
   document.getElementById('mainView').style.display = view === 'main' ? 'block' : 'none';
   document.getElementById('historyView').style.display = view === 'history' ? 'block' : 'none';
   document.getElementById('statsView').style.display = view === 'stats' ? 'block' : 'none';
+  document.getElementById('settingsView').style.display = view === 'settings' ? 'block' : 'none';
   document.getElementById('resultArea').style.display = 'block';
 }
 
@@ -297,6 +302,8 @@ function drawChart(ranges) {
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  const isLight = document.body.classList.contains('light-theme');
+
   const labels = ['1–3', '4–6', '7–8', '9–10'];
   const values = labels.map(l => ranges[l]);
   const max = Math.max(...values, 1);
@@ -304,18 +311,77 @@ function drawChart(ranges) {
   const gap = 40;
   const startX = (canvas.width - (barWidth + gap) * labels.length + gap) / 2;
 
+  const colors = ['#FF6B6B', '#FFD93D', '#6BCB77', '#4A9EFF'];
+
   labels.forEach((label, i) => {
     const x = startX + i * (barWidth + gap);
     const height = (values[i] / max) * 140;
     const y = canvas.height - 30 - height;
 
-    ctx.fillStyle = ['#FF6B6B', '#FFD93D', '#6BCB77', '#4A9EFF'][i];
+    ctx.fillStyle = colors[i];
     ctx.fillRect(x, y, barWidth, height);
 
-    ctx.fillStyle = '#E0E0E0';
+    ctx.fillStyle = isLight ? '#1A1A1A' : '#FFFFFF';
+    ctx.font = '14px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(values[i], x + barWidth / 2, y - 10);
+
+    ctx.fillStyle = isLight ? '#333' : '#AAAAAA';
     ctx.font = '12px Inter, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText(label, x + barWidth / 2, canvas.height - 8);
-    ctx.fillText(values[i], x + barWidth / 2, y - 8);
+    ctx.fillText(label, x + barWidth / 2, canvas.height - 10);
   });
 }
+
+const themeToggle = document.getElementById('darkThemeToggle');
+const body = document.body;
+
+document.getElementById('themeToggleIcon').addEventListener('click', () => {
+  const isLight = document.body.classList.contains('light-theme');
+  const icon = document.getElementById('themeToggleIcon');
+
+  if (isLight) {
+    document.body.classList.remove('light-theme');
+    localStorage.setItem('wordDayTheme', 'dark');
+    icon.textContent = '🌙';
+  } else {
+    document.body.classList.add('light-theme');
+    localStorage.setItem('wordDayTheme', 'light');
+    icon.textContent = '☀️';
+  }
+});
+
+function loadTheme() {
+  const savedTheme = localStorage.getItem('wordDayTheme');
+  const icon = document.getElementById('themeToggleIcon');
+
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
+    icon.textContent = '☀️';
+  } else {
+    document.body.classList.remove('light-theme');
+    icon.textContent = '🌙';
+  }
+}
+
+loadTheme();
+
+themeToggle.addEventListener('change', () => {
+  if (themeToggle.checked) {
+    body.classList.remove('light-theme');
+    localStorage.setItem('wordDayTheme', 'dark');
+  } else {
+    body.classList.add('light-theme');
+    localStorage.setItem('wordDayTheme', 'light');
+  }
+});
+
+loadTheme();
+
+document.getElementById('resetProgressBtn').addEventListener('click', () => {
+  if (confirm('Удалить все записи и сбросить прогресс?')) {
+    localStorage.removeItem('wordDayRecords');
+    localStorage.removeItem('wordIndex');
+    location.reload();
+  }
+});
