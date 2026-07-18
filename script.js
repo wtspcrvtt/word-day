@@ -227,12 +227,6 @@ document.getElementById('clearHistoryBtn').addEventListener('click', () => {
   }
 });
 
-function showView(view) {
-  document.getElementById('mainView').style.display = view === 'main' ? 'block' : 'none';
-  document.getElementById('historyView').style.display = view === 'history' ? 'block' : 'none';
-  document.getElementById('resultArea').style.display = 'block';
-}
-
 document.getElementById('historyBtn').addEventListener('click', () => {
   showView('history');
   renderHistory();
