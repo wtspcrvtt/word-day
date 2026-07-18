@@ -235,6 +235,11 @@ document.getElementById('historyBtn').addEventListener('click', () => {
 document.getElementById('backToMainBtn').addEventListener('click', () => {
   showView('main');
 });
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'backToMainBtn') {
+    showView('main');
+  }
+});
 
 document.getElementById('statsBtn').addEventListener('click', () => {
   showView('stats');
@@ -254,6 +259,14 @@ function renderStats() {
   const avgScore = (records.reduce((sum, r) => sum + r.score, 0) / total).toFixed(1);
   const best = Math.max(...records.map(r => r.score));
 
+  const ranges = { '1–3': 0, '4–6': 0, '7–8': 0, '9–10': 0 };
+    records.forEach(r => {
+      if (r.score <= 3) ranges['1–3']++;
+      else if (r.score <= 6) ranges['4–6']++;
+      else if (r.score <= 8) ranges['7–8']++;
+      else ranges['9–10']++;
+  });
+
   container.innerHTML = `
     <div class="stats-summary">
       <div class="stat-item"><span>Всего записей</span> <strong>${total}</strong></div>
@@ -263,11 +276,13 @@ function renderStats() {
     <div class="stats-chart">
       <canvas id="scoreChart" width="400" height="200"></canvas>
     </div>
-    <p class="stats-note">График среднего балла по дням</p>
+    <p class="stats-note">График среднего балла</p>
   `;
 
-  drawChart(records);
+  drawChart(ranges);
 }
+
+
 
 function showView(view) {
   document.getElementById('mainView').style.display = view === 'main' ? 'block' : 'none';
@@ -276,9 +291,31 @@ function showView(view) {
   document.getElementById('resultArea').style.display = 'block';
 }
 
-function drawChart(records) {
+function drawChart(ranges) {
   const canvas = document.getElementById('scoreChart');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const labels = ['1–3', '4–6', '7–8', '9–10'];
+  const values = labels.map(l => ranges[l]);
+  const max = Math.max(...values, 1);
+  const barWidth = 60;
+  const gap = 40;
+  const startX = (canvas.width - (barWidth + gap) * labels.length + gap) / 2;
+
+  labels.forEach((label, i) => {
+    const x = startX + i * (barWidth + gap);
+    const height = (values[i] / max) * 140;
+    const y = canvas.height - 30 - height;
+
+    ctx.fillStyle = ['#FF6B6B', '#FFD93D', '#6BCB77', '#4A9EFF'][i];
+    ctx.fillRect(x, y, barWidth, height);
+
+    ctx.fillStyle = '#E0E0E0';
+    ctx.font = '12px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, x + barWidth / 2, canvas.height - 8);
+    ctx.fillText(values[i], x + barWidth / 2, y - 8);
+  });
 }
